@@ -1,0 +1,4 @@
+node_modules/
+cookies.sqlite
+cookies.sqlite-shm
+cookies.sqlite-wal

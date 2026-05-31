@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cookie Saver (SQLite)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+      <div>
+        <h1 class="mb-1">🍪 Cookie Saver</h1>
+        <div class="text-muted">Save your cookie inventory using SQLite (server-backed) + a Bootstrap UI.</div>
+      </div>
+      <div class="text-end">
+        <span class="badge text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">Persistent Storage</span>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Add Cookie</h2>
+
+            <div class="mb-3">
+              <label class="form-label">Cookie name</label>
+              <input id="nameInput" class="form-control" placeholder="e.g., Netflix" maxlength="120" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Notes (optional)</label>
+              <input id="notesInput" class="form-control" placeholder="e.g., Netflix account" maxlength="300" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Cookie JSON <span class="text-danger">*</span></label>
+              <textarea id="cookieDataInput" class="form-control font-monospace" rows="4" placeholder='[{"name":"auth_token","value":"abc123"}]'></textarea>
+            </div>
+
+            <button id="addBtn" class="btn btn-primary w-100">Save Cookie</button>
+
+            <div id="formAlert" class="alert alert-danger mt-3 d-none" role="alert"></div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm mt-4">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Manage Data</h2>
+
+            <div class="d-grid gap-2">
+              <button id="clearBtn" class="btn btn-outline-danger">Clear All</button>
+              <button id="exportBtn" class="btn btn-outline-secondary">Export JSON</button>
+
+              <label class="btn btn-outline-secondary mb-0 d-flex justify-content-center align-items-center gap-2" style="cursor:pointer;">
+                Import JSON
+                <input id="importFile" type="file" accept="application/json" class="d-none" />
+              </label>
+
+              <button id="importTextBtn" class="btn btn-outline-secondary">Import (Paste JSON)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between gap-2">
+              <h2 class="h5 mb-0">Saved Cookies</h2>
+              <button id="refreshBtn" class="btn btn-sm btn-light border">Refresh</button>
+            </div>
+
+            <div id="emptyState" class="alert alert-info mt-3 mb-0">
+              No cookies saved yet.
+            </div>
+
+            <div id="listWrap" class="mt-3 d-none">
+              <div id="cookiesTable" class="table-responsive">
+                <table class="table align-middle table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width:28%">Name</th>
+                      <th>Notes</th>
+                      <th style="width:20%">Created</th>
+                      <th class="table-actions"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="cookiesTbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="alert alert-success mt-3 d-none" id="successToast" role="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-4 mt-2" style="background-color: var(--cookie-surface); border-top: 1px solid var(--cookie-border);">
+    <div class="d-flex justify-content-center gap-3 mb-2">
+      <a href="https://renzledesma.online" target="_blank" title="Portfolio" style="color: var(--cookie-muted); text-decoration: none;" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='var(--cookie-muted)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/renz.ledesma.339849" target="_blank" title="Facebook" style="color: var(--cookie-muted); font-size: 1.3rem; text-decoration: none;" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='var(--cookie-muted)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/renzledesma76?igsh=MWFwamh6MDlxeHU2MA==" target="_blank" title="Instagram" style="color: var(--cookie-muted); font-size: 1.3rem; text-decoration: none;" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='var(--cookie-muted)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24s3.668-.014 4.948-.072c1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948s-.014-3.668-.072-4.948c-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@christianrenzledesma?_r=1&_t=ZS-96oaaq7ZNn2" target="_blank" title="TikTok" style="color: var(--cookie-muted); font-size: 1.3rem; text-decoration: none;" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='var(--cookie-muted)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+      </a>
+    </div>
+    <small class="text-muted">🍪 Cookie Saver &mdash; Built with SQLite + Bootstrap &copy; 2026 Cookie Saver. All rights reserved.</small>
+  </footer>
+
+  <!-- Import Paste Modal -->
+  <div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Import Cookies JSON</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-text mb-2">This will replace current cookies after confirmation.</div>
+          <textarea id="importTextArea" class="form-control" rows="8" placeholder='{"cookies":[{"name":"Chocolate Chip","quantity":24,"notes":"Fresh"}]}'></textarea>
+          <div id="importModalAlert" class="alert alert-danger mt-3 d-none" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="importModalConfirmBtn" class="btn btn-primary">Import</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View JSON Modal -->
+  <div class="modal fade" id="viewJsonModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewJsonModalTitle">Cookie JSON</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <pre id="viewJsonPre" class="form-control font-monospace" style="white-space:pre-wrap;word-break:break-all;max-height:400px;overflow-y:auto;"></pre>
+        </div>
+        <div class="modal-footer">
+          <button id="copyJsonBtn" class="btn btn-outline-secondary">Copy</button>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

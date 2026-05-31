@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;600&display=swap');
+
+:root {
+  --cookie-red: #c0392b;
+  --cookie-red-dark: #96281b;
+  --cookie-red-light: #e74c3c;
+  --cookie-bg: #0d0d0d;
+  --cookie-surface: #1a1a1a;
+  --cookie-surface2: #222222;
+  --cookie-border: #2e2e2e;
+  --cookie-text: #ffffff;
+  --cookie-muted: #9a8a78;
+  --cookie-chip: #3b2a1a;
+}
+
+body {
+  background-color: var(--cookie-bg) !important;
+  color: var(--cookie-text) !important;
+  font-family: 'Inter', sans-serif;
+  background-image: radial-gradient(circle at 20% 20%, #1a0a0a 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, #1a0505 0%, transparent 50%);
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--cookie-red-light) !important;
+  letter-spacing: 1px;
+  text-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+}
+
+h2 {
+  color: var(--cookie-text) !important;
+}
+
+.text-muted {
+  color: var(--cookie-muted) !important;
+}
+
+/* Cards */
+.card {
+  background-color: var(--cookie-surface) !important;
+  border: 1px solid var(--cookie-border) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5) !important;
+}
+
+/* Inputs */
+.form-control, textarea.form-control {
+  background-color: var(--cookie-surface2) !important;
+  border: 1px solid var(--cookie-border) !important;
+  color: var(--cookie-text) !important;
+  border-radius: 10px !important;
+}
+
+.form-control:focus, textarea.form-control:focus {
+  border-color: var(--cookie-red) !important;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.25) !important;
+  background-color: var(--cookie-surface2) !important;
+  color: var(--cookie-text) !important;
+}
+
+.form-control::placeholder {
+  color: var(--cookie-muted) !important;
+  opacity: 0.7;
+}
+
+.form-label {
+  color: var(--cookie-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--cookie-red) !important;
+  border-color: var(--cookie-red) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: var(--cookie-red-dark) !important;
+  border-color: var(--cookie-red-dark) !important;
+}
+
+/* Outline buttons */
+.btn-outline-danger {
+  color: var(--cookie-red-light) !important;
+  border-color: var(--cookie-red-light) !important;
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--cookie-red) !important;
+  color: #fff !important;
+}
+
+.btn-outline-secondary {
+  color: var(--cookie-muted) !important;
+  border-color: var(--cookie-border) !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--cookie-surface2) !important;
+  color: var(--cookie-text) !important;
+  border-color: var(--cookie-red) !important;
+}
+
+.btn-light {
+  background-color: var(--cookie-surface2) !important;
+  border-color: var(--cookie-border) !important;
+  color: var(--cookie-text) !important;
+}
+
+.btn-light:hover {
+  background-color: var(--cookie-chip) !important;
+}
+
+/* Table */
+.table {
+  color: var(--cookie-text) !important;
+  --bs-table-hover-bg: rgba(192, 57, 43, 0.08);
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: transparent;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  border-color: var(--cookie-border) !important;
+  padding: 0.75rem 0.85rem;
+}
+
+.table thead th {
+  color: var(--cookie-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 600;
+  border-bottom: 2px solid var(--cookie-red) !important;
+  background-color: var(--cookie-surface2);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.table tbody td {
+  color: #ffffff !important;
+}
+
+.table tbody tr {
+  transition: background-color 0.15s;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.table-actions {
+  white-space: nowrap;
+  text-align: right;
+  width: 1%;
+}
+
+/* Cookie qty chip */
+.cookie-qty {
+  font-weight: 700;
+  color: var(--cookie-red-light);
+  background: rgba(192, 57, 43, 0.15);
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  display: inline-block;
+}
+
+.cookie-notes {
+  color: #ffffff;
+  max-width: 360px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.small-muted {
+  color: #ffffff;
+}
+
+/* Alerts */
+.alert-info {
+  background-color: var(--cookie-surface2) !important;
+  border-color: var(--cookie-border) !important;
+  color: var(--cookie-muted) !important;
+}
+
+.alert-danger {
+  background-color: rgba(192, 57, 43, 0.15) !important;
+  border-color: var(--cookie-red) !important;
+  color: #ff8a80 !important;
+}
+
+.alert-success {
+  background-color: rgba(192, 57, 43, 0.1) !important;
+  border-color: var(--cookie-red) !important;
+  color: #ffb3a7 !important;
+}
+
+#emptyState {
+  border-radius: 12px;
+}
+
+/* Badge */
+.badge {
+  background-color: rgba(192, 57, 43, 0.15) !important;
+  border-color: var(--cookie-red) !important;
+  color: var(--cookie-red-light) !important;
+}
+
+/* HR divider */
+hr {
+  border-color: var(--cookie-border) !important;
+  opacity: 1;
+}
+
+/* Modal */
+.modal-content {
+  background-color: var(--cookie-surface) !important;
+  border: 1px solid var(--cookie-border) !important;
+  color: var(--cookie-text) !important;
+}
+
+.modal-header {
+  border-bottom-color: var(--cookie-border) !important;
+}
+
+.modal-footer {
+  border-top-color: var(--cookie-border) !important;
+}
+
+.btn-close {
+  filter: invert(1);
+}
+
+.btn {
+  border-radius: 12px;
+}
